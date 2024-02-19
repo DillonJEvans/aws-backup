@@ -1,4 +1,5 @@
 import os
+from collections import namedtuple
 from math import floor
 
 
@@ -8,23 +9,29 @@ SIZES_ABBRV: tuple[str, ...] = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', '
 TRANSMISSION_RATES: tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps')
 
 
-def directory_size(directory: str, followlinks: bool = False) -> int:
+# The return type for directory_summary().
+DirectoryInfo = namedtuple('DirectoryInfo', ('count', 'size'))
+
+
+def directory_summary(directory: str, followlinks: bool = False) -> DirectoryInfo:
     """
-    Sums the size of all files in the directory and all subdirectories.
+    Counts the number of files and sums the size of all files in the directory and all subdirectories.
     :param directory: The directory to get the size of.
     :param followlinks: True to follow symbolic links, False otherwise.
-    :return: The size of the directory in bytes.
+    :return: The number of files (count) and size (size) of the directory.
     """
+    count = 0
     size = 0
     for dirpath, dirnames, filenames in os.walk(directory, followlinks=followlinks):
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
             if followlinks or not os.path.islink(full_path):
+                count += 1
                 size += os.path.getsize(full_path)
-    return size
+    return DirectoryInfo(count, size)
 
 
-def format_size(size: int, units: tuple[str, ...] = SIZES, unit_size: int = 1024):
+def format_size(size: int, units: tuple[str, ...] = SIZES, unit_size: int = 1024) -> str:
     """
     Formats the given size (typically either in bytes or bits) to a human-readable string.
 
