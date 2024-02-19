@@ -1,6 +1,3 @@
-# Maybe make it work with both directories and individual files later.
-
-
 from .args import parse_arguments
 
 from ..utils.size import directory_size, format_size

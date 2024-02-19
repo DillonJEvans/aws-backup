@@ -1,12 +1,11 @@
 import os
 from math import floor
-from typing import Tuple
 
 
 # Constants for use as format_size() unit labels (the units parameter).
-SIZES: Tuple[str, ...] = ('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
-SIZES_ABBRV: Tuple[str, ...] = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
-TRANSMISSION_RATES: Tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps')
+SIZES: tuple[str, ...] = ('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+SIZES_ABBRV: tuple[str, ...] = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+TRANSMISSION_RATES: tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps')
 
 
 def directory_size(directory: str, followlinks: bool = False) -> int:
@@ -25,7 +24,7 @@ def directory_size(directory: str, followlinks: bool = False) -> int:
     return size
 
 
-def format_size(size: int, units: Tuple[str, ...] = SIZES, unit_size: int = 1024):
+def format_size(size: int, units: tuple[str, ...] = SIZES, unit_size: int = 1024):
     """
     Formats the given size (typically either in bytes or bits) to a human-readable string.
 

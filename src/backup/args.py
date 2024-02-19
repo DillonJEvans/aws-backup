@@ -1,6 +1,5 @@
 import os
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
-from typing import Tuple
 
 
 class Arguments:
@@ -36,7 +35,7 @@ def directory(raw_path: str) -> str:
     return raw_path
 
 
-def bucket_and_directory(name: str) -> Tuple[str, str]:
+def bucket_and_directory(name: str) -> tuple[str, str]:
     """Meant to be used a type converter for ArgumentParser.add_argument()."""
     elements = name.split('::')
     if len(elements) != 2:
