@@ -1,5 +1,7 @@
 from .args import parse_arguments
 
+import boto3
+
 from ..utils.size import directory_summary, format_size
 
 
@@ -10,8 +12,9 @@ def main():
     print(args.bucket_dir)
     dir_info = directory_summary(args.source_dir)
     print(
-        f'{args.source_dir} has {dir_info.count} files and is {format_size(dir_info.size)}'
-        f'{f" ({dir_info.size:,} bytes)" if dir_info.size >= 1024 else ""}.'
+        f'{args.source_dir} has {dir_info.directory_count} directories, '
+        f'{dir_info.file_count} files and is {format_size(dir_info.total_size)}'
+        f'{f" ({dir_info.total_size:,} bytes)" if dir_info.total_size >= 1024 else ""}.'
     )
 
 

@@ -10,25 +10,33 @@ TRANSMISSION_RATES: tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'P
 
 
 # The return type for directory_summary().
-DirectoryInfo = namedtuple('DirectoryInfo', ('count', 'size'))
+DirectoryInfo = namedtuple('DirectoryInfo', ('directory_count', 'file_count', 'total_size'))
 
 
 def directory_summary(directory: str, followlinks: bool = False) -> DirectoryInfo:
     """
-    Counts the number of files and sums the size of all files in the directory and all subdirectories.
-    :param directory: The directory to get the size of.
+    Gets the following summary information about the directory:
+
+    * directory_count -- The number of subdirectories.
+    * file_count      -- The number of files (including in subdirectories).
+    * total_size      -- The total size of all files (including in subdirectories).
+
+    :param directory: The directory to get the summary of.
     :param followlinks: True to follow symbolic links, False otherwise.
-    :return: The number of files (count) and size (size) of the directory.
+    :return: Summary information about the directory.
     """
-    count = 0
+    # Don't count the given directory.
+    directory_count = -1
+    file_count = 0
     size = 0
     for dirpath, dirnames, filenames in os.walk(directory, followlinks=followlinks):
+        directory_count += 1
         for filename in filenames:
             full_path = os.path.join(dirpath, filename)
             if followlinks or not os.path.islink(full_path):
-                count += 1
+                file_count += 1
                 size += os.path.getsize(full_path)
-    return DirectoryInfo(count, size)
+    return DirectoryInfo(directory_count, file_count, size)
 
 
 def format_size(size: int, units: tuple[str, ...] = SIZES, unit_size: int = 1024) -> str:
