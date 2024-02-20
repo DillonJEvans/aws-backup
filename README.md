@@ -88,11 +88,12 @@ python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
 ## Roadmap
 
 - [X] Complete the backup program.
-  - [ ] Add a progress bar and information.
+  - [X] Add a progress bar and information.
   - [ ] Polish the output at the start and end of the program.
 - [ ] Complete the restore program.
   - [ ] Add a progress bar and information.
   - [ ] Polish the output at the start and end of the program.
+- [ ] Backup empty directories.
 - [ ] Allow individual files to be backed up and restored.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

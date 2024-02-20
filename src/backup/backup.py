@@ -1,6 +1,7 @@
 import os
 import sys
 from datetime import datetime
+from typing import Callable, Optional
 
 import boto3
 from botocore.exceptions import ClientError
@@ -62,7 +63,8 @@ def print_create_bucket_error(error_code: str, bucket_name: str) -> bool:
     return False
 
 
-def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3_client=None) -> None:
+def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3_client=None,
+                     callback: Optional[Callable[[str, bool], None]] = None) -> None:
     """
     Backs up the directory to the bucket.
 
@@ -70,6 +72,9 @@ def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3
     :param bucket_name: The name of the bucket to back up the directory to.
     :param bucket_directory: The name of the backed up directory in the bucket.
     :param s3_client: The S3 Client to use. A simple client will be created if none is specified.
+    :param callback: An optional callback function that will be called after each file is backed up.
+                     The parameters are the backed up file's path,
+                     and whether the file was backed up or not.
     """
     # Create a simple S3 Client if none was specified.
     if s3_client is None:
@@ -83,12 +88,16 @@ def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3
             relative_file_path = os.path.join(relative_path, file_name)
             object_key = os.path.join(bucket_directory, relative_file_path)
             # Backup the file if needed.
-            if should_backup(file_path, bucket_name, object_key, s3_client):
+            should_backup_file = should_backup(file_path, bucket_name, object_key, s3_client)
+            if should_backup_file:
                 print(f'Backing up {relative_file_path}...', end='')
                 s3_client.upload_file(file_path, bucket_name, object_key)
                 print(' completed.')
             else:
                 print(f'Already backed up {relative_file_path}.')
+            # Call the callback if there is one.
+            if callback is not None:
+                callback(file_path, should_backup_file)
 
 
 def should_backup(file_path: str, bucket_name: str, object_key: str, s3_client=None) -> bool:

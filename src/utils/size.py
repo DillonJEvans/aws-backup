@@ -6,6 +6,7 @@ from math import floor
 # Constants for use as format_size() unit labels (the units parameter).
 SIZES: tuple[str, ...] = ('bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
 SIZES_ABBRV: tuple[str, ...] = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+SIZES_ALIGNED_ABBRV: tuple[str, ...] = (' B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
 TRANSMISSION_RATES: tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 'Zbps', 'Ybps')
 
 
