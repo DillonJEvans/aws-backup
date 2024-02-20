@@ -1,8 +1,65 @@
 import os
+import sys
 from datetime import datetime
 
 import boto3
 from botocore.exceptions import ClientError
+
+
+def create_bucket(bucket_name: str, s3_client=None) -> bool:
+    """
+    Creates the bucket if possible.
+    Prints a message if the bucket was created or if something goes wrong.
+
+    :param bucket_name: The name of the bucket to create.
+    :param s3_client: The S3 Client to use. A simple client will be created if none is specified.
+    :return: True if the bucket exists after this function, False otherwise.
+    """
+    # Create a simple S3 Client if none was specified.
+    if s3_client is None:
+        s3_client = boto3.client('s3')
+    # Check if the bucket already exists.
+    try:
+        s3_client.head_bucket(Bucket=bucket_name)
+        return True
+    except ClientError:
+        pass
+    # Prepare to try to create the bucket.
+    region = s3_client.meta.region_name
+    bucket_config = {'LocationConstraint': region}
+    # Try to create the bucket.
+    print('Attempting to create the bucket...', end='')
+    try:
+        s3_client.create_bucket(Bucket=bucket_name, CreateBucketConfiguration=bucket_config)
+    except ClientError as e:
+        # If creating the bucket failed, then print an error message and return False.
+        error_code = e.response['Error']['Code']
+        return print_create_bucket_error(error_code, bucket_name)
+    # The bucket was successfully created.
+    print(' success.')
+    return True
+
+
+def print_create_bucket_error(error_code: str, bucket_name: str) -> bool:
+    """
+    Prints an error for the create_bucket() function.
+
+    :param error_code: The error code (ClientError['Error']['Code']) of the exception.
+    :param bucket_name: The name of the bucket that was attempted to be created.
+    :return: True if the bucket was created, False otherwise.
+    """
+    if error_code == 'BucketAlreadyOwnedByYou':
+        print(' success.')
+        return True
+    print()
+    if error_code == 'BucketAlreadyExists':
+        error_message = f'"{bucket_name}" is owned by someone else. Please try again with a different bucket name.'
+    elif error_code == 'InvalidBucketName':
+        error_message = f'"{bucket_name}" is an invalid bucket name. Please try again with a different bucket name.'
+    else:
+        error_message = 'An unexpected error occurred while trying to create the bucket.'
+    print(error_message, file=sys.stderr)
+    return False
 
 
 def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3_client=None) -> None:

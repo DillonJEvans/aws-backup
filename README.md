@@ -28,7 +28,7 @@
 
 This is a pair of simple python programs for backing up and restoring a directory to AWS S3.
 This was completed as an assignment for my Cloud Computing course at the University of Washington Bothell,
-and [`Specifications.pdf`](Specifications.pdf) is the specifications of the assignment.
+and [`Specifications.pdf`](Specifications.pdf) were the provided specifications of the assignment.
 
 
 ### Built With
@@ -87,9 +87,13 @@ python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Complete the backup program
-- [ ] Complete the restore program
-- [ ] Allow individual files to be backed up and restored
+- [X] Complete the backup program.
+  - [ ] Add a progress bar and information.
+  - [ ] Polish the output at the start and end of the program.
+- [ ] Complete the restore program.
+  - [ ] Add a progress bar and information.
+  - [ ] Polish the output at the start and end of the program.
+- [ ] Allow individual files to be backed up and restored.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
