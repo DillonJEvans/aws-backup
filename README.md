@@ -71,13 +71,13 @@ For either program to function, the following must be done first:
 To back up a directory, use the following command with your directory, bucket, and bucket directory:
 
 ```commandline
-python -m src.backup.backup your_directory your_bucket::your_bucket_directory
+python -m src.backup.driver your_directory your_bucket::your_bucket_directory
 ```
 
 or on some machines:
 
 ```commandline
-python3 -m src.backup.backup your_directory your_bucket::your_bucket_directory
+python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
