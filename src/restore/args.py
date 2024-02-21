@@ -1,4 +1,3 @@
-import os
 from argparse import ArgumentParser, ArgumentTypeError, Namespace
 
 
@@ -24,16 +23,9 @@ def parse_arguments() -> Arguments:
     parser = ArgumentParser(description='Restores a backup from AWS.')
     parser.add_argument('source', metavar='bucket::directory', type=bucket_and_directory,
                         help='bucket and directory to restore from')
-    parser.add_argument('destination', metavar='directory', type=directory,
+    parser.add_argument('destination', metavar='directory',
                         help='directory to restore to')
     return Arguments(parser.parse_args())
-
-
-def directory(raw_path: str) -> str:
-    """Meant to be used a type converter for ArgumentParser.add_argument()."""
-    if not os.path.isdir(raw_path):
-        raise ArgumentTypeError('no such directory')
-    return raw_path
 
 
 def bucket_and_directory(name: str) -> tuple[str, str]:

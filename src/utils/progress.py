@@ -2,7 +2,7 @@ import os
 from decimal import Decimal, ROUND_HALF_UP
 from typing import Optional
 
-from .size import format_size, SIZES_ALIGNED_ABBRV
+from .size import format_size, SIZES_ABBRV, SIZES_ALIGNED_ABBRV
 
 
 class ProgressLogger:
@@ -17,8 +17,8 @@ class ProgressLogger:
     progress_bar_complete: str
     progress_bar_incomplete: str
 
-    def __init__(self, total_files=0, total_size=0, trailing_spaces=3,
-                 progress_bar_width=20, progress_bar_complete='#', progress_bar_incomplete='.'):
+    def __init__(self, total_files=0, total_size=0, trailing_spaces=4,
+                 progress_bar_width=20, progress_bar_complete='█', progress_bar_incomplete='-'):
         """
         Initializes the ProgressLogger.
 
@@ -57,17 +57,18 @@ class ProgressLogger:
                                         complete=self.progress_bar_complete,
                                         incomplete=self.progress_bar_incomplete)
         # Get the progress in terms of size.
-        formatted_size_complete = format_size(self.completed_size, units=SIZES_ALIGNED_ABBRV)
-        formatted_size_total = format_size(self.total_size, units=SIZES_ALIGNED_ABBRV)
+        units = SIZES_ALIGNED_ABBRV if self.total_size >= 1024 else SIZES_ABBRV
+        formatted_size_complete = format_size(self.completed_size, units=units)
+        formatted_size_total = format_size(self.total_size, units=units)
         # Ensure that any size between 0 and total_size will align properly.
-        formatted_max_bytes = format_size(1000, units=SIZES_ALIGNED_ABBRV)
+        formatted_max_bytes = format_size(1000, units=units)
         max_size_len = max(map(len, (formatted_size_total, formatted_max_bytes)))
         size_progress = f'{formatted_size_complete:>{max_size_len}}/{formatted_size_total}'
         # Get the progress in terms of files.
         max_files_len = len(str(self.total_files))
         files_progress = f'{self.completed_files:>{max_files_len}}/{self.total_files} files'
         # Put everything together.
-        return f'{progress_percentage} |{progress_bar}|  {size_progress}   {files_progress}'
+        return f'{progress_percentage} |{progress_bar}| {size_progress}   {files_progress}'
 
     def print_progress_info(self, trailing_spaces: Optional[int] = None) -> None:
         """

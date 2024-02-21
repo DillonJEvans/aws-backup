@@ -93,7 +93,7 @@ the appropriate command line arguments.
   - [X] Polish the output at the start and end of the program.
 - [X] Complete the restore program.
   - [X] Add a progress bar and information.
-  - [ ] Polish the output at the start and end of the program.
+  - [X] Polish the output at the start and end of the program.
 - [ ] Backup empty directories.
 - [ ] Allow individual files to be backed up and restored.
 
