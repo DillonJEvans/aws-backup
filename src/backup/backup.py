@@ -90,11 +90,15 @@ def backup_directory(directory: str, bucket_name: str, bucket_directory: str, s3
             # Backup the file if needed.
             should_backup_file = should_backup(file_path, bucket_name, object_key, s3_client)
             if should_backup_file:
-                print(f'Backing up {relative_file_path}...', end='')
-                s3_client.upload_file(file_path, bucket_name, object_key)
-                print(' completed.')
+                print(f'Backing up         {relative_file_path}', end='')
+                try:
+                    s3_client.upload_file(file_path, bucket_name, object_key)
+                    print()
+                except ClientError:
+                    print('    failed', file=sys.stderr)
+                    should_backup_file = False
             else:
-                print(f'Already backed up {relative_file_path}.')
+                print(f'Already backed up  {relative_file_path}')
             # Call the callback if there is one.
             if callback is not None:
                 callback(file_path, should_backup_file)

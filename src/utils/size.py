@@ -1,5 +1,5 @@
 import os
-from collections import namedtuple
+from dataclasses import dataclass
 from math import floor
 
 
@@ -11,7 +11,11 @@ TRANSMISSION_RATES: tuple[str, ...] = ('bps', 'Kbps', 'Mbps', 'Gbps', 'Tbps', 'P
 
 
 # The return type for directory_summary().
-DirectoryInfo = namedtuple('DirectoryInfo', ('directory_count', 'file_count', 'total_size'))
+@dataclass
+class DirectoryInfo:
+    directory_count: int
+    file_count: int
+    total_size: int
 
 
 def directory_summary(directory: str, followlinks: bool = False) -> DirectoryInfo:
@@ -30,13 +34,13 @@ def directory_summary(directory: str, followlinks: bool = False) -> DirectoryInf
     directory_count = -1
     file_count = 0
     size = 0
-    for dirpath, dirnames, filenames in os.walk(directory, followlinks=followlinks):
+    for path, directory_names, file_names in os.walk(directory, followlinks=followlinks):
         directory_count += 1
-        for filename in filenames:
-            full_path = os.path.join(dirpath, filename)
-            if followlinks or not os.path.islink(full_path):
+        for file_name in file_names:
+            file_path = os.path.join(path, file_name)
+            if followlinks or not os.path.islink(file_path):
                 file_count += 1
-                size += os.path.getsize(full_path)
+                size += os.path.getsize(file_path)
     return DirectoryInfo(directory_count, file_count, size)
 
 

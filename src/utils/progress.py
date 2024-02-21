@@ -17,7 +17,7 @@ class ProgressLogger:
     progress_bar_complete: str
     progress_bar_incomplete: str
 
-    def __init__(self, total_files=0, total_size=0, trailing_spaces=8,
+    def __init__(self, total_files=0, total_size=0, trailing_spaces=3,
                  progress_bar_width=20, progress_bar_complete='#', progress_bar_incomplete='.'):
         """
         Initializes the ProgressLogger.
@@ -67,7 +67,7 @@ class ProgressLogger:
         max_files_len = len(str(self.total_files))
         files_progress = f'{self.completed_files:>{max_files_len}}/{self.total_files} files'
         # Put everything together.
-        return f'{progress_percentage} |{progress_bar}|  {size_progress}    {files_progress}'
+        return f'{progress_percentage} |{progress_bar}|  {size_progress}   {files_progress}'
 
     def print_progress_info(self, trailing_spaces: Optional[int] = None) -> None:
         """

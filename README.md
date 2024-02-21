@@ -26,7 +26,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is a pair of simple python programs for backing up and restoring a directory to AWS S3.
+This is a pair of simple command line programs for backing up and restoring a directory to AWS S3.
 This was completed as an assignment for my Cloud Computing course at the University of Washington Bothell,
 and [`Specifications.pdf`](Specifications.pdf) were the provided specifications of the assignment.
 
@@ -89,7 +89,7 @@ python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
 
 - [X] Complete the backup program.
   - [X] Add a progress bar and information.
-  - [ ] Polish the output at the start and end of the program.
+  - [X] Polish the output at the start and end of the program.
 - [ ] Complete the restore program.
   - [ ] Add a progress bar and information.
   - [ ] Polish the output at the start and end of the program.

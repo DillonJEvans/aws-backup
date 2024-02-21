@@ -13,14 +13,15 @@ def main():
     if not create_bucket(args.bucket_name, s3_client):
         return
     # Prepare the progress logger and print a cool sounding message for the user to read.
-    print('Indexing the directory...', end='')
+    print('Calculating the size of the directory...', end='')
     directory_info = directory_summary(args.source_dir)
     progress = ProgressLogger(directory_info.file_count, directory_info.total_size)
     formatted_directory_size = format_size(directory_info.total_size)
     print(f' backing up {directory_info.file_count} files ({formatted_directory_size}).')
     progress.print_progress_info()
     # Begin the backup.
-    backup_directory(args.source_dir, args.bucket_name, args.bucket_dir, s3_client, progress.complete_file)
+    backup_directory(args.source_dir, args.bucket_name, args.bucket_dir,
+                     s3_client=s3_client, callback=progress.complete_file)
     print('\nBackup completed.')
 
 
