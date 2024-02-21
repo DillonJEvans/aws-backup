@@ -68,17 +68,18 @@ For either program to function, the following must be done first:
 <!-- USAGE -->
 ## Usage
 
-To back up a directory, use the following command with your directory, bucket, and bucket directory:
-
+To back up a directory, use the following command:
 ```commandline
 python -m src.backup.driver your_directory your_bucket::your_bucket_directory
 ```
 
-or on some machines:
-
+To restore from a directory, use the following command:
 ```commandline
-python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
+python -m src.restore.driver your_bucket::your_bucket_directory your_directory
 ```
+
+Don't forget to replace your_directory, your_bucket, and your_bucket_directory
+the appropriate command line arguments.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -90,8 +91,8 @@ python3 -m src.backup.driver your_directory your_bucket::your_bucket_directory
 - [X] Complete the backup program.
   - [X] Add a progress bar and information.
   - [X] Polish the output at the start and end of the program.
-- [ ] Complete the restore program.
-  - [ ] Add a progress bar and information.
+- [X] Complete the restore program.
+  - [X] Add a progress bar and information.
   - [ ] Polish the output at the start and end of the program.
 - [ ] Backup empty directories.
 - [ ] Allow individual files to be backed up and restored.
