@@ -26,6 +26,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+![Backup Screenshot][backup-screenshot]
+
 This is a pair of simple command line programs for backing up and restoring a directory to AWS S3.
 This was completed as an assignment for my Cloud Computing course at the University of Washington Bothell,
 and [`Specifications.pdf`](Specifications.pdf) were the provided specifications of the assignment.
@@ -101,9 +103,11 @@ the appropriate command line arguments.
 
 
 
-[Boto3-shield]:    https://img.shields.io/badge/Boto3-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white
-[Boto3-url]:       https://aws.amazon.com/sdk-for-python/
-[Python-shield]:   https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
-[Python-url]:      https://www.python.org/
-[AmazonS3-shield]: https://img.shields.io/badge/Amazon_S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white
-[AmazonS3-url]:    https://aws.amazon.com/s3/
+[backup-screenshot]:  images/backup_example.PNG
+[restore-screenshot]: images/restore_example.PNG
+[Boto3-shield]:       https://img.shields.io/badge/Boto3-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white
+[Boto3-url]:          https://aws.amazon.com/sdk-for-python/
+[Python-shield]:      https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white
+[Python-url]:         https://www.python.org/
+[AmazonS3-shield]:    https://img.shields.io/badge/Amazon_S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white
+[AmazonS3-url]:       https://aws.amazon.com/s3/
